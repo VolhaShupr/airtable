@@ -1,8 +1,7 @@
 import { h, Component } from 'preact';
-import NavButton from './navButton';
+import Button from './navButton';
 import requests from '../utils/requests';
 import helpers from '../utils/helpers';
-import { Link } from 'preact-router/match';
 
 class AirtableContent extends Component {
     constructor({ tableId }) {
@@ -30,20 +29,29 @@ class AirtableContent extends Component {
                     this.setState({
                         isSent: true
                     })
-                }.bind(this));
+                }.bind(this))
+                .catch(function(error) {
+                   console.log(error);
+                    this.setState({
+                        isSent: false
+                    })
+                });
         }
     }
 
     render({ tableId }, state) {
-        let nameId = helpers.getTableName(tableId);
+        let name = helpers.getTableName(tableId);
 
         return (
             <div>
-                <h1>Table: { nameId }</h1>
-                <h1>Table: { nameId }</h1>
-                <p>This is the content of chosen table #{ nameId }.</p>
+                <h1>Table: { name }</h1>
+                <h1>Table: { name }</h1>
+                <p>This is the content of chosen table { name }.</p>
                 <pre>{ JSON.stringify(state.tableContent, 0, '  ') }</pre>
-                <NavButton href={state.isSent ? "/" : null} value="Publish" disabled={!state.tableContent} onClick={() => this.sendDataToFirebase()}/>
+                <Button value="Publish" disabled={!state.tableContent} onClick={() => this.sendDataToFirebase()}/>
+                {state.isSent &&
+                    <p>Data was published successfully</p>
+                }
             </div>
         );
     }

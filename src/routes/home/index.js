@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import style from './style';
-import airtables from '../../airbase/schema';
+import airbase from '../../airbase/schema';
 
 
 class TableItem extends Component {
@@ -14,6 +14,7 @@ class TableItem extends Component {
 
 class TablesList extends Component {
     render() {
+    	let airtables = airbase.tables;
         return (
 			<div class={style.item}>
 				<ul>

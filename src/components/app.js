@@ -4,6 +4,7 @@ import { Router } from 'preact-router';
 import Header from './header';
 import Home from '../routes/home';
 import Profile from '../routes/profile';
+import Admin from '../routes/admin/admin';
 
 import AirtableContent from './airtableContent';
 // import Home from 'async!../routes/home';
@@ -31,7 +32,9 @@ export default class App extends Component {
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
-					<AirtableContent path="/:tableId" />
+					<Admin path="/admin" />
+					<AirtableContent path="/admin/:tableId" />
+
 				</Router>
 			</div>
 		);
