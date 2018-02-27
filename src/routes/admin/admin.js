@@ -8,7 +8,8 @@ export default class Admin extends Component {
     constructor() {
         super();
         this.state = {
-            userId: "4"
+            userId: "3",
+            hasData: false
         }
     }
 
@@ -18,16 +19,23 @@ export default class Admin extends Component {
                 if (snapshot.val()) {
                     airbase.apiKey = snapshot.val().apiKey;
                     airbase.baseId = snapshot.val().baseId;
+                    this.setHasDataState();
                 }
+
             }.bind(this))
     }
 
-    render (props, state) {
+    setHasDataState() {
+        this.setState({
+            hasData: true
+        });
+    }
 
+    render (props, state) {
+        let component = state.hasData ? <TablesList /> : <AirbaseInfoForm userId={state.userId} callback={this.setHasDataState.bind(this)} />;
         return (
             <div>
-                <AirbaseInfoForm userId={state.userId} />
-                <TablesList />
+                {component}
             </div>
 
         )

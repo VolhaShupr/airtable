@@ -7,8 +7,7 @@ export default class AirbaseInfoForm extends Component {
         super(props);
         this.state = {
             apiKey: "",
-            baseId: "",
-            userId: props.userId
+            baseId: ""
         }
     }
 
@@ -19,10 +18,11 @@ export default class AirbaseInfoForm extends Component {
             baseId: this.state.baseId
         };
 
-        requests.sendUserData(this.state.userId, userData)
-            .then(function(response){
+        requests.sendUserData(this.props.userId, userData)
+            .then(function(){
                 airbase.apiKey = this.state.apiKey;
                 airbase.baseId = this.state.baseId;
+                this.props.callback();
             }.bind(this))
             .catch(function(error) {
                 console.log(error);

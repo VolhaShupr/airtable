@@ -33,7 +33,7 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<Admin path="/admin" />
-					<AirtableContent path="/admin/:tableId" />
+					<AirtableContent path="/admin/:type" />
 
 				</Router>
 			</div>

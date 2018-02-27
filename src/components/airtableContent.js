@@ -4,17 +4,17 @@ import requests from '../utils/requests';
 import helpers from '../utils/helpers';
 
 class AirtableContent extends Component {
-    constructor({ tableId }) {
+    constructor({ type }) {
         super();
         this.state = {
-            tableId: tableId,
+            type: type,
             tableContent: "",
             isSent: false
         }
     }
 
     componentDidMount(){
-        requests.getTableContent(this.state.tableId)
+        requests.getTableContent(this.state.type)
             .then(function(response){
                 this.setState({
                     tableContent: response.data
@@ -24,7 +24,7 @@ class AirtableContent extends Component {
 
     sendDataToFirebase(){
         if (this.state.tableContent) {
-            requests.sendTableContent(this.state.tableId, this.state.tableContent)
+            requests.sendTableContent(this.state.type, this.state.tableContent)
                 .then(function(response){
                     this.setState({
                         isSent: true
@@ -39,14 +39,12 @@ class AirtableContent extends Component {
         }
     }
 
-    render({ tableId }, state) {
-        let name = helpers.getTableName(tableId);
-
+    render({ type }, state) {
         return (
             <div>
-                <h1>Table: { name }</h1>
-                <h1>Table: { name }</h1>
-                <p>This is the content of chosen table { name }.</p>
+                <h1>Table: { type }</h1>
+                <h1>Table: { type }</h1>
+                <p>This is the content of chosen table { type }.</p>
                 <pre>{ JSON.stringify(state.tableContent, 0, '  ') }</pre>
                 <Button value="Publish" disabled={!state.tableContent} onClick={() => this.sendDataToFirebase()}/>
                 {state.isSent &&

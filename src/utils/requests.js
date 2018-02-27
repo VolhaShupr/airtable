@@ -3,14 +3,10 @@ import helpers from './helpers';
 import airbase from '../airbase/schema';
 import {database} from '../components/firebase';
 
-//const config = airtableConfig;
-
-//const url = `https://api.airtable.com/v0/${config.base}/${config.table}?maxRecords=${config.maxRecords}&view=${config.view}&api_key=${config.apiKey}`;
-
 const requests = {
-    getTableContent: function(tableId) {
-        let viewId = helpers.getTableViewId(tableId);
-        let url = `https://api.airtable.com/v0/${airbase.baseId}/${tableId}?maxRecords=${airbase.maxRecords}&view=${viewId}&api_key=${airbase.apiKey}`;
+    getTableContent: function(tableName) {
+        let viewId = helpers.getTableViewId(tableName);
+        let url = `https://api.airtable.com/v0/${airbase.baseId}/${tableName}?maxRecords=${airbase.maxRecords}&view=${viewId}&api_key=${airbase.apiKey}`;
 
         return axios.get(url);
     },
@@ -18,8 +14,8 @@ const requests = {
         return database.ref('Users/' + userId).once('value');
     },
 
-    sendTableContent: function(tableId, data) {
-        return database.ref('Tables/' + tableId).set(data);
+    sendTableContent: function(tableName, data) {
+        return database.ref('Tables/' + tableName).set(data);
     },
     sendUserData: function(userId, data) {
         return database.ref('Users/' + userId).set(data);

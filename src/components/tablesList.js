@@ -19,8 +19,8 @@ class TablesList extends Component {
                 <p>List of tables you can choose</p>
                 <ul>
                     {airtables.map(table => (
-                        <li key={table.id}>
-                            <TableItem value={table.name} href={"/admin/" + table.id}/>
+                        <li key={table.name}>
+                            <TableItem value={table.name} href={"/admin/" + table.name}/>
                         </li>
                     ))}
                 </ul>

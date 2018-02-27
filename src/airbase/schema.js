@@ -4,19 +4,19 @@ const airbase = {
     "maxRecords": 20,
     "tables": [
         {
-            "id": "tblMQuVPTS1tFtP2l",
+            "id": "",
             "name": "catalogue",
-            "viewId": "viwFPdFQTwQkDKao5"
+            "viewId": "Grid%20view"
         },
         {
-            "id": "tblmj23K1DrZMAT6t",
+            "id": "",
             "name": "visuals",
-            "viewId": "viwSdbRXrah8eX5Ni"
+            "viewId": "Grid%20view"
         },
         {
-            "id": "tblqKUKJ8WllavazX",
+            "id": "",
             "name": "shows",
-            "viewId": "viw7mjEDup3QPCABk"
+            "viewId": "Grid%20view"
         }]
 };
 
