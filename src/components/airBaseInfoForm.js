@@ -36,7 +36,7 @@ export default class AirbaseInfoForm extends Component {
 
         return (
             <div>
-                <h1> Fill airtable info </h1>
+                <h1> temp </h1>
                 <h1> Fill airbase info </h1>
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <div>

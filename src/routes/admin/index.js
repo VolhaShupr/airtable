@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import AirbaseInfoForm from '../../components/airbaseInfoForm';
 import TablesList from '../../components/tablesList';
 import requests from '../../utils/requests';
+import helpers from '../../utils/helpers';
 import airbase from '../../airbase/schema';
 
 export default class Admin extends Component {
@@ -32,7 +33,14 @@ export default class Admin extends Component {
     }
 
     render (props, state) {
-        let component = state.hasData ? <TablesList /> : <AirbaseInfoForm userId={state.userId} callback={this.setHasDataState.bind(this)} />;
+        let airtables = airbase.tables;
+        let tablesNames = helpers.getAirtablesName(airtables);
+        let component;
+        if (state.hasData) {
+            component = <TablesList tables={tablesNames} url="/admin/"/>
+        } else {
+            component = <AirbaseInfoForm userId={state.userId} callback={this.setHasDataState.bind(this)} />;
+        }
         return (
             <div>
                 {component}

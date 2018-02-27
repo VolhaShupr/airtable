@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
-import airbase from '../airbase/schema';
 
 class TableItem extends Component {
     render(props, state) {
@@ -11,16 +10,15 @@ class TableItem extends Component {
 }
 
 class TablesList extends Component {
-    render() {
-        let airtables = airbase.tables;
+    render({tables, url}) {
         return (
             <div>
-                <h1>d</h1>
+                <h1>temp</h1>
                 <p>List of tables you can choose</p>
                 <ul>
-                    {airtables.map(table => (
-                        <li key={table.name}>
-                            <TableItem value={table.name} href={"/admin/" + table.name}/>
+                    {tables && tables.map(table => (
+                        <li key={table}>
+                            <TableItem value={table} href={url + table}/>
                         </li>
                     ))}
                 </ul>

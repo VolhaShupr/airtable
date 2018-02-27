@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import Button from './navButton';
 import requests from '../utils/requests';
-import helpers from '../utils/helpers';
 
 class AirtableContent extends Component {
     constructor({ type }) {
@@ -14,12 +13,13 @@ class AirtableContent extends Component {
     }
 
     componentDidMount(){
-        requests.getTableContent(this.state.type)
+        requests.getAirtableContent(this.state.type)
             .then(function(response){
                 this.setState({
                     tableContent: response.data
                 })
             }.bind(this))
+        //setTimeout(request, 1000);
     }
 
     sendDataToFirebase(){
@@ -42,7 +42,7 @@ class AirtableContent extends Component {
     render({ type }, state) {
         return (
             <div>
-                <h1>Table: { type }</h1>
+                <h1>temp</h1>
                 <h1>Table: { type }</h1>
                 <p>This is the content of chosen table { type }.</p>
                 <pre>{ JSON.stringify(state.tableContent, 0, '  ') }</pre>

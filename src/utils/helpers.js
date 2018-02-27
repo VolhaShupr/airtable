@@ -10,6 +10,18 @@ const helpers = {
             }
         }
     },
+    getDbTablesName: function(tables) {
+        let tablesName = [];
+        for (name in tables) {
+            tablesName.push(name)
+        }
+        return tablesName;
+    },
+    getAirtablesName: function(tables) {
+        return tables.map(function(table) {
+            return table.name;
+        })
+    }
 };
 
 export default helpers;

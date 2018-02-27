@@ -1,41 +1,31 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router/match';
+import TablesList from '../../components/tablesList';
+import helpers from '../../utils/helpers';
+import {database} from '../../components/firebase';
 import style from './style';
-import airbase from '../../airbase/schema';
-
-
-class TableItem extends Component {
-	render(props, state) {
-		return (
-			<Link activeClassName={style.active} href={props.href} name={props.value}>{props.value}</Link>
-		)
-	}
-}
-
-class TablesList extends Component {
-    render() {
-    	let airtables = airbase.tables;
-        return (
-			<div class={style.item}>
-				<ul>
-					{airtables.map(table => (
-						<li key={table.id}>
-							<TableItem value={table.name} href={"/" + table.id}/>
-						</li>
-					))}
-				</ul>
-			</div>
-        )
-    }
-}
 
 class Home extends Component {
-	render() {
+    constructor() {
+        super();
+        this.state = {
+            tables: ""
+        }
+    }
+
+    componentDidMount(){
+        database.ref('Tables').on('value', (function(snapshot){
+            this.setState({
+                tables: snapshot.val()
+            })
+        }.bind(this)));
+    }
+
+	render(props, {tables}) {
+        let tablesName = helpers.getDbTablesName(tables);
 		return (
+
 			<div class={style.home}>
-				<h1>Home</h1>
-				<p>List of tables you can choose</p>
-				<TablesList />
+				<TablesList tables={tablesName} url="/"/>
 			</div>
 		);
 	}

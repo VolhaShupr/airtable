@@ -4,16 +4,19 @@ import airbase from '../airbase/schema';
 import {database} from '../components/firebase';
 
 const requests = {
-    getTableContent: function(tableName) {
+    getAirtableContent: function(tableName) {
         let viewId = helpers.getTableViewId(tableName);
         let url = `https://api.airtable.com/v0/${airbase.baseId}/${tableName}?maxRecords=${airbase.maxRecords}&view=${viewId}&api_key=${airbase.apiKey}`;
 
-        return axios.get(url);
+        return axios({
+            method:'get',
+            url: url,
+            /*timeout: 1000*/
+        });
     },
     getUserAirbaseInfo: function(userId) {
         return database.ref('Users/' + userId).once('value');
     },
-
     sendTableContent: function(tableName, data) {
         return database.ref('Tables/' + tableName).set(data);
     },
