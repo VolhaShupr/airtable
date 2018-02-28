@@ -18,12 +18,12 @@ class TableContent extends Component {
         }.bind(this)));
     }
 
-    render({ type }, state) {
+    render({type}, state) {
         return (
             <div>
                 <h1>temp</h1>
-                <h1>Table: { type }</h1>
-                <p>This is the content of chosen table { type }.</p>
+                <h1>Table: {type}</h1>
+                <p>This is the content of chosen table {type}.</p>
                 <pre>{ JSON.stringify(state.tableContent, 0, '  ') }</pre>
             </div>
         );

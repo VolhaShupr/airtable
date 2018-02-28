@@ -23,7 +23,6 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
-
 	render() {
 		return (
 			<div id="app">

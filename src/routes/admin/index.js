@@ -2,8 +2,6 @@ import { h, Component } from 'preact';
 import AirbaseInfoForm from '../../components/airbaseInfoForm';
 import TablesList from '../../components/tablesList';
 import requests from '../../utils/requests';
-import helpers from '../../utils/helpers';
-import airbase from '../../airbase/schema';
 
 export default class Admin extends Component {
     constructor() {
@@ -18,8 +16,10 @@ export default class Admin extends Component {
         requests.getUserAirbaseInfo(this.state.userId)
             .then(function(snapshot){
                 if (snapshot.val()) {
-                    airbase.apiKey = snapshot.val().apiKey;
-                    airbase.baseId = snapshot.val().baseId;
+                    localStorage.setItem("airbaseInfo", JSON.stringify({
+                        apiKey: snapshot.val().apiKey,
+                        baseId: snapshot.val().baseId
+                    }));
                     this.setHasDataState();
                 }
 
@@ -32,20 +32,17 @@ export default class Admin extends Component {
         });
     }
 
-    render (props, state) {
-        let airtables = airbase.tables;
-        let tablesNames = helpers.getAirtablesName(airtables);
-        let component;
-        if (state.hasData) {
-            component = <TablesList tables={tablesNames} url="/admin/"/>
-        } else {
-            component = <AirbaseInfoForm userId={state.userId} callback={this.setHasDataState.bind(this)} />;
-        }
+    render() {
+        const AIRTABLES = ["catalogue", "visuals", "shows"];
+
+        let component = this.state.hasData ?
+            <TablesList tables={AIRTABLES} url="/admin/"/> :
+            <AirbaseInfoForm userId={this.state.userId} callback={this.setHasDataState.bind(this)} />;
+
         return (
             <div>
                 {component}
             </div>
-
         )
     }
 }

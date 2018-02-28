@@ -1,18 +1,12 @@
 import axios from 'axios';
-import helpers from './helpers';
-import airbase from '../airbase/schema';
 import {database} from '../components/firebase';
 
 const requests = {
     getAirtableContent: function(tableName) {
-        let viewId = helpers.getTableViewId(tableName);
-        let url = `https://api.airtable.com/v0/${airbase.baseId}/${tableName}?maxRecords=${airbase.maxRecords}&view=${viewId}&api_key=${airbase.apiKey}`;
+        const airbaseInfo = JSON.parse(localStorage.getItem("airbaseInfo"));
+        let url = `https://api.airtable.com/v0/${airbaseInfo.baseId}/${tableName}?api_key=${airbaseInfo.apiKey}`;
 
-        return axios({
-            method:'get',
-            url: url,
-            /*timeout: 1000*/
-        });
+        return axios.get(url);
     },
     getUserAirbaseInfo: function(userId) {
         return database.ref('Users/' + userId).once('value');

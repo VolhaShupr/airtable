@@ -12,29 +12,49 @@ class AirtableContent extends Component {
         }
     }
 
-    componentDidMount(){
+    componentWillMount() {
+        this.fetchDataWithInterval();
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
+
+    fetchData() {
         requests.getAirtableContent(this.state.type)
             .then(function(response){
                 this.setState({
                     tableContent: response.data
                 })
             }.bind(this))
-        //setTimeout(request, 1000);
+            .catch(function(error){
+                console.log(error);
+            });
+    }
+
+    fetchDataWithInterval() {
+        this.timeout = setInterval(() => this.fetchData(), 15000);
+    }
+
+    setIsSentState(value) {
+        this.setState({
+            isSent: value
+        })
     }
 
     sendDataToFirebase(){
         if (this.state.tableContent) {
             requests.sendTableContent(this.state.type, this.state.tableContent)
-                .then(function(response){
-                    this.setState({
-                        isSent: true
-                    })
+                .then(function(){
+                    this.setIsSentState(true);
                 }.bind(this))
                 .catch(function(error) {
-                   console.log(error);
-                    this.setState({
-                        isSent: false
-                    })
+                    console.log(error);
+                    this.setIsSentState(false);
                 });
         }
     }

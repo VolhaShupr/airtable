@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import requests from '../utils/requests';
-import airbase from '../airbase/schema';
 
 export default class AirbaseInfoForm extends Component {
     constructor(props) {
@@ -20,15 +19,11 @@ export default class AirbaseInfoForm extends Component {
 
         requests.sendUserData(this.props.userId, userData)
             .then(function(){
-                airbase.apiKey = this.state.apiKey;
-                airbase.baseId = this.state.baseId;
                 this.props.callback();
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
             });
-
-
     }
 
     render (props, state) {
